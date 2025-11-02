@@ -33,7 +33,7 @@ Hi there! 👋 This WinForms project is my personal shortcut for taming Windows 
 1. Install Visual Studio 2022 17.8+ with the “.NET desktop development” workload (must include .NET 8.0 SDK).
 2. Open `ShutdownSchedule.sln`.
 3. Restore packages if prompted.
-4. Build and run (`Ctrl+Shift+B`, then `F5`/`Ctrl+F5`). Accept the UAC prompt—admin rights are required for shutdown commands.
+4. Build and run (`Ctrl+Shift+B`, then `F5`/`Ctrl+F5`). The app now launches with your current user privileges; run Visual Studio as admin if you need to issue shutdown commands from a limited account.
 
 ### Command Line
 
@@ -42,11 +42,21 @@ cd path/to/ShutdownSchedule
 dotnet build
 ```
 
-Launch `bin/Debug/net8.0-windows/ShutdownSchedule.exe` (or the Release build if you prefer) and approve the UAC prompt.
+Launch `bin/Debug/net8.0-windows/ShutdownSchedule.exe` (or the Release build if you prefer). If the logged-in account lacks shutdown rights, run the executable as administrator when necessary.
+
+### Build a Single-File EXE
+
+Need a single executable you can drop onto another PC? Use the publish profile we ship:
+
+```bash
+cd path/to/ShutdownSchedule
+dotnet publish -p:PublishProfile=SingleFileWinX64
+```
+
+The output lands in `publish/win-x64-single/ShutdownSchedule.exe`. It’s self-contained, so you can copy that folder to any x64 Windows machine (no .NET runtime required) and run it as usual. If the target account doesn’t have the “Shut down the system” privilege, right-click and **Run as administrator** before scheduling power actions.
 
 ## Things Left To Polish / Future Ideas
 
-- Package it as a single-file installer (MSIX or self-contained publish) to simplify deployment.
 - Add localization + configurable hotkeys for power users.
 - Surface the activity log directly in the tray tooltip and export it to CSV.
 - Optional countdown visible right on the tray icon.
