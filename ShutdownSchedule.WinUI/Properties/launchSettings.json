@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShutdownSchedule.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ShutdownSchedule.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
